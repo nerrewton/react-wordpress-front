@@ -1,0 +1,58 @@
+[
+    {
+        "menu_id": 1,
+        "nombre": "Inicio",
+        "icon": "home",
+        "component": "Home",
+        "ruta": "/",
+        "estado": 1,
+        "menu_padre_id": null,
+        "tipo_menu": 1,
+        "portal_id": 1,
+        "fecha_crea": null,
+        "fecha_modifica": null,
+        "hijos": []
+    },
+    {
+        "menu_id": 4,
+        "nombre": "Quiénes somos",
+        "icon": "people",
+        "component": "Nosotros",
+        "ruta": "/nosotros",
+        "estado": 1,
+        "menu_padre_id": null,
+        "tipo_menu": 1,
+        "portal_id": 1,
+        "fecha_crea": null,
+        "fecha_modifica": null,
+        "hijos": []
+    },
+    {
+        "menu_id": 2,
+        "nombre": "Ventas",
+        "icon": "bills",
+        "component": "Ventas",
+        "ruta": "/ventas",
+        "estado": 1,
+        "menu_padre_id": null,
+        "tipo_menu": 1,
+        "portal_id": 1,
+        "fecha_crea": null,
+        "fecha_modifica": null,
+        "hijos": [
+            {
+                "menu_id": 3,
+                "nombre": "Ventas mensuales",
+                "icon": "bills",
+                "component": "VentasMensuales",
+                "ruta": "/ventas_mensuales",
+                "estado": 1,
+                "menu_padre_id": 2,
+                "tipo_menu": 2,
+                "portal_id": 1,
+                "fecha_crea": null,
+                "fecha_modifica": null
+            }
+        ]
+    }
+]
