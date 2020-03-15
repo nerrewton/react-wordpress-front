@@ -1,0 +1,41 @@
+//Basic layout css
+$gray-background-color: #f8f9fa
+
+%aside-basic
+    width: 320px
+    height: auto
+    background-color: $gray-background-color
+    position: fixed
+    margin: 0px 3% 12px 3%
+    border-radius: 12px
+    padding: 3px 6px 3px 6px
+
+.custom-container
+    clear: both
+    margin-left: 12px
+    margin-right: 12px
+
+    .custom-aside-left
+        @extend %aside-basic
+        left: 0
+
+    .custom-aside-right
+        @extend %aside-basic
+        right: 0
+    
+    .custom-content
+        width: 512px
+        margin: auto
+        margin-top: 12px
+        border-radius: 12px
+        padding: 0px 6px 3px 6px
+
+        .custom-buscador
+            width: 100%
+            height: auto
+            margin-bottom: 12px
+
+        .custom-feed
+            width: 100%
+            background-color: $gray-background-color
+
