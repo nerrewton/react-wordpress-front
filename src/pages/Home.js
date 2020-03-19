@@ -8,6 +8,7 @@ import LeftAside from '../components/LeftAside';
 import RightAside from '../components/RightAside';
 import Buscador from '../components/Buscador';
 import FiltroBusqueda from '../components/FiltroBusqueda';
+import EntradaFeed from '../components/EntradaFeed';
 
 const Home = () => {
     return (
@@ -29,7 +30,12 @@ const Home = () => {
                     </Row>
                 </div>
                 <div className="custom-feed">
-                    Hola feed
+                    <EntradaFeed />
+                    <EntradaFeed />
+                    <EntradaFeed />
+                    <EntradaFeed />
+                    <EntradaFeed />
+                    <EntradaFeed />
                 </div>       
             </div>
         </div>

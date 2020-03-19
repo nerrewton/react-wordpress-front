@@ -5,15 +5,16 @@ import {
     NavDropdown
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import configuracion from '../config/configuration.json';
 
 const Header = props => {
     const { menus } = props;
     if (!menus) return null;
 
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="light" expand="lg" className="custom-header">
             <Link to="/" className="navbar-brand">
-                Chistes Colombianos
+                {configuracion.nombre_app}
             </Link>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
