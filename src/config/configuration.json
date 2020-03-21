@@ -1,3 +1,5 @@
 {
-    "nombre_app": "Cockycode"
+    "nombre_app": "Cockycode",
+    "api_url": "http://api.cockycode.com/",
+    "portal_id": 3
 }

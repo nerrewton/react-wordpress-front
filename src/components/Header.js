@@ -20,7 +20,7 @@ const Header = props => {
             <Navbar.Collapse id="basic-navbar-nav">
                 <Nav className="mr-auto">
                     {menus.map((menu, key) => {
-                        if (menu.hijos.length > 0) {
+                        if (menu.hijos && menu.hijos.length > 0) {
                             return (
                                 <NavDropdown
                                     title={menu.nombre}
