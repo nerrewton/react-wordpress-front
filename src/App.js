@@ -12,7 +12,6 @@ const App = () => {
     const getMenusPortal = async () => {
         const allMenus = getAllMenus();
         await allMenus.then( response => {
-            console.log("App -> response", response);
             setMenus(  response );
         }).catch( error => {
             console.error("App -> error", error)        
