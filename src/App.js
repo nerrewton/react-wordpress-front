@@ -1,24 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-//import menus from "./testParameters/menuParams.json";
 import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
 import { getComponent } from "./routes/routeComponentMap";
-import { getAllMenus } from "./services/menu/menuServices";
+import portalMenus from "./routes/routesDefinition.json";
 
 const App = () => {
-    let [ menus, setMenus ] = useState([]);
-    let [ count ] = useState(0);
-    const getMenusPortal = async () => {
-        const allMenus = getAllMenus();
-        await allMenus.then( response => {
-            setMenus(  response );
-        }).catch( error => {
-            console.error("App -> error", error)        
-        });
-    }
-
-    useEffect( () => { getMenusPortal(); }, [count]);
+    let menus = portalMenus;
 
     return (
         <Router>

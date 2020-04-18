@@ -1,0 +1,28 @@
+[
+    {
+        "menu_id": 1,
+        "nombre": "Quiénes somos",
+        "icon": "people",
+        "ruta": "/nosotros",
+        "component": "Nosotros",
+        "menu_padre_id": null,
+        "tipo_menu_id": 1,
+        "portal_id": 3,
+        "estado": 1,
+        "fecha_crea": "2020-03-21T20:17:43.000Z",
+        "fecha_modifica": null
+    },
+    {
+        "menu_id": 2,
+        "nombre": "Inicio",
+        "icon": "home",
+        "ruta": "/",
+        "component": "Home",
+        "menu_padre_id": null,
+        "tipo_menu_id": 1,
+        "portal_id": 3,
+        "estado": 1,
+        "fecha_crea": "2020-03-21T22:07:52.000Z",
+        "fecha_modifica": "2020-03-21T23:09:03.000Z"
+    }
+]
