@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 import LeftAside from "../components/LeftAside";
 import RightAside from "../components/RightAside";
@@ -12,23 +13,33 @@ class Home extends Component {
     constructor(props) {
         super(props);
 
+        this._isMounted = false;
+        this.abortController = new AbortController();
+
         this.state = {
             posts: [],
             page: 1,
             length: 5,
-            hasMorePosts: true
+            hasMorePosts: true,
+            loading: false
         };
 
         this.handlePosts = this.handlePosts.bind(this);
     }
 
     componentDidMount() {
+        this._isMounted = true;
         this.handlePosts();
         window.addEventListener("scroll", this.handleScroll);
     }
 
+    componentWillUnmount(){
+        this._isMounted = false;
+        this.abortController.abort();
+    }
+
     getPosts = page => {
-        const promisePost = getPostPaginate(page, this.state.length);
+        const promisePost = getPostPaginate(page, this.state.length, this.abortController.signal );
 
         promisePost
             .then(response => {
@@ -44,6 +55,7 @@ class Home extends Component {
                     newState = {
                         posts: nowPost,
                         hasMorePosts: response.length === actualLength,
+                        loading: false,
                         page:
                             response.length === actualLength
                                 ? actualPage + 1
@@ -51,7 +63,8 @@ class Home extends Component {
                     };
                 } else {
                     newState = {
-                        hasMorePosts: false
+                        hasMorePosts: false,
+                        loading: false
                     };
                 }
 
@@ -61,12 +74,18 @@ class Home extends Component {
                 });
             })
             .catch(error => {
-                console.error("Error al obtener post paginados", error);
+                console.warn("Warning al obtener post paginados", error);
             });
     };
 
     handlePosts = () => {
         this.getPosts(this.state.page);
+        if( this._isMounted ){
+            this.setState({
+                ...this.state,
+                loading: true
+            });
+        }
     };
 
     handleScroll = () => {
@@ -82,7 +101,7 @@ class Home extends Component {
             html.offsetHeight
         );
 
-        if( scroll === height && this.state.hasMorePosts ){
+        if( scroll >= (height - 60 )  && this.state.hasMorePosts && !this.state.loading ){
             this.handlePosts( this.state.page );
         }
     };
@@ -102,15 +121,21 @@ class Home extends Component {
                         <Row>
                             <Col>
                                 <span className="custom-letra-opaca">
-                                    Filtrar resultados:
+                                    Filtrar resultados
                                 </span>
+                                {/*
                                 <FiltroBusqueda />
+                                */}
                             </Col>
                         </Row>
                     </div>
                     <div className="custom-feed">
                         {this.state.posts.map((post, index) => {
-                            return <EntradaFeed data={post} key={index} />;
+                            return (
+                                <Link to={"post/" + post.post_name} key={index}>
+                                    <EntradaFeed data={post} />
+                                </Link>
+                            );
                         })}
                         <div id="no_post" className="custom-no-entries">
                             No hay más resultados!
