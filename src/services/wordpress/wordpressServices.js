@@ -16,11 +16,10 @@ export const getPostPaginate = ( page = 1, length = 5, signal ) => {
     }).then( response => response.json() );
 }
 
-export const getPostById = ( postId, signal ) => {
+export const getPostById = ( postId ) => {
     if( !postId ) return {};
 
     return fetch(configuration.api_wordpress_url + "posts/"+ postId, {
-        signal,
         method: "GET",
         headers:{
             'Content-Type': 'application/json'

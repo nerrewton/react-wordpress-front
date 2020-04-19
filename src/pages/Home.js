@@ -68,10 +68,12 @@ class Home extends Component {
                     };
                 }
 
-                this.setState({
-                    ...this.state,
-                    ...newState
-                });
+                if( this._isMounted ){
+                    this.setState({
+                        ...this.state,
+                        ...newState
+                    });
+                }
             })
             .catch(error => {
                 console.warn("Warning al obtener post paginados", error);

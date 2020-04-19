@@ -57,6 +57,7 @@ const EntradaFeed = ( params ) => {
 
             getMetaPost( metaId );
         }
+
     }, [data]);
 
     return (
