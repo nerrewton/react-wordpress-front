@@ -21,7 +21,7 @@ const App = () => {
                         </Route>
                     );
                 })}
-                <Route exact path="post/:post_url">
+                <Route exact path="/post/:post_url">
                     <Post />
                 </Route>
                 <Route path="*">
