@@ -4,7 +4,7 @@ import {
     Col
 } from "react-bootstrap";
 
-import { getPostById } from "../services/wordpress/wordpressServices";
+import { getPostByUrl } from "../services/wordpress/wordpressServices";
 import { dateToString } from "../tools/dateTools";
 
 class Post extends Component {
@@ -23,13 +23,14 @@ class Post extends Component {
     }
 
     getPostContent(){
-        const postContentRequest = getPostById( 5 );
+        const url = window.location.pathname;
+        const postContentRequest = getPostByUrl( url.substr( 6 ), this.abortController.signal );
 
         postContentRequest.then( response => {
             if( response ){
                 let newState = {
                     title: response.post_title,
-                    author: "",
+                    author: response.WpUsers.display_name,
                     publishingDate: dateToString( new Date(response.post_date), 'yyyy/mm/dd' ),
                     content: response.post_content
                 };
@@ -50,7 +51,7 @@ class Post extends Component {
     }
 
     componentWillUnmount(){
-
+        this.abortController.abort();
     }
 
     render() { 

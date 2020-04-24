@@ -27,3 +27,16 @@ export const getPostById = ( postId ) => {
         credentials: 'same-origin'
     }).then( response => response.json() );
 }
+
+export const getPostByUrl = ( url, signal ) => {
+    if( !url ) return {};
+
+    return fetch(configuration.api_wordpress_url + "posts/url/"+ url, {
+        signal,
+        method: "GET",
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    }).then( response => response.json() );
+}
