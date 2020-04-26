@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import {
     Row,
-    Col
+    Col,
+    Button
 } from "react-bootstrap";
 
 import { getPostByUrl } from "../services/wordpress/wordpressServices";
 import { dateToString } from "../tools/dateTools";
+import MobileAds from "../components/MobileAds";
 
 class Post extends Component {
     constructor( props ){
@@ -20,6 +23,7 @@ class Post extends Component {
         };
 
         this.abortController = new AbortController();
+        this.goBack = this.goBack.bind(this);
     }
 
     getPostContent(){
@@ -44,6 +48,10 @@ class Post extends Component {
         }).catch( error =>{
             console.warn( error );
         });
+    }
+
+    goBack(){
+        this.props.history.goBack();
     }
 
     componentDidMount(){
@@ -71,10 +79,12 @@ class Post extends Component {
                         <section className="post-footer">
                         </section>
                     </article>
+                    <Button variant="dark" size="lg" onClick={this.goBack}>Volver</Button>
                 </div>
+                <MobileAds />
             </div>
         );
     }
 }
  
-export default Post;
+export default withRouter(Post);

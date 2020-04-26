@@ -3,7 +3,7 @@ $gray-background-color: #f8f9fa
 
 %aside-basic
     width: 320px
-    height: auto
+    height: 89%
     background-color: $gray-background-color
     position: fixed
     margin: 0px 3% 12px 3%
@@ -11,9 +11,8 @@ $gray-background-color: #f8f9fa
     padding: 3px 6px 3px 6px
 
 .custom-container
+    width: 100%
     clear: both
-    margin-left: 12px
-    margin-right: 12px
     margin-top: 66px
 
     .custom-aside-left
@@ -62,3 +61,48 @@ $gray-background-color: #f8f9fa
         padding: 0px 6px 3px 6px
         position: relative
         box-sizing: border-box
+        margin-bottom: 24px
+
+@media screen and ( max-width: 768px )
+    .custom-container
+        width: 100%
+        margin-left: 0
+        margin-right: 0
+        padding-left: 0
+        padding-right: 0
+
+        .custom-aside-left
+            display: none
+            margin: 0
+            padding: 0
+
+        .custom-aside-right
+            display: none
+            margin: 0
+            padding: 0
+
+        .custom-content
+            width: 100%
+            margin-left: 0
+            margin-right: 0
+            padding-left: 0
+            padding-right: 0
+
+            .custom-buscador
+                position: relative
+                .row
+                    margin-left: 0
+                    margin-right: 0
+
+            .custom-feed
+                top: 0px
+                margin-left: 0
+                margin-right: 0
+                position: relative
+
+        .custom-content-post
+            margin-left: 0
+            margin-right: 0
+            width: 100%
+            margin-bottom: 114px
+    

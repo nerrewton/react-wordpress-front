@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import WebAds from "./WebAds";
 
 class RightAside extends Component {
     render() { 
         return (
             <div className="custom-aside-right">
-                aside dos
+                <WebAds />
             </div>
         );
     }

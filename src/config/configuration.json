@@ -2,5 +2,6 @@
     "nombre_app": "Cockycode",
     "api_url": "http://api.cockycode.com/",
     "api_wordpress_url": "http://api.cockycode.com/wordpress/",
-    "portal_id": 3
+    "portal_id": 3,
+    "adsJavaScript": ""
 }

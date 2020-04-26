@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 
 import LeftAside from "../components/LeftAside";
 import RightAside from "../components/RightAside";
 import Buscador from "../components/Buscador";
-import FiltroBusqueda from "../components/FiltroBusqueda";
 import EntradaFeed from "../components/EntradaFeed";
 import { getPostPaginate } from "../services/wordpress/wordpressServices";
 
@@ -17,75 +17,63 @@ class Home extends Component {
         this.abortController = new AbortController();
 
         this.state = {
-            posts: [],
-            page: 1,
-            length: 5,
-            hasMorePosts: true,
-            loading: false
+            loading: false,
         };
 
         this.handlePosts = this.handlePosts.bind(this);
     }
 
+    updatePost(type = "", posts = []) {
+        this.props.dispatch({ type, posts });
+    }
+
     componentDidMount() {
         this._isMounted = true;
-        this.handlePosts();
+        if (this.props.posts.length <= 0) {
+            this.handlePosts("HOME_POST_NEXT_PAGE");
+        } else {
+            this.updatePost();
+        }
+
         window.addEventListener("scroll", this.handleScroll);
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         this._isMounted = false;
         this.abortController.abort();
     }
 
-    getPosts = page => {
-        const promisePost = getPostPaginate(page, this.state.length, this.abortController.signal );
+    getPosts = (type) => {
+        const promisePost = getPostPaginate(
+            this.props.page,
+            this.props.length,
+            this.abortController.signal
+        );
 
         promisePost
-            .then(response => {
-                let newState = {};
-
+            .then((response) => {
                 if (response && response.length > 0) {
-                    let nowPost = this.state.posts;
-                    let actualPage = this.state.page;
-                    let actualLength = this.state.length;
-
-                    nowPost = nowPost.concat(response);
-
-                    newState = {
-                        posts: nowPost,
-                        hasMorePosts: response.length === actualLength,
-                        loading: false,
-                        page:
-                            response.length === actualLength
-                                ? actualPage + 1
-                                : actualPage
-                    };
-                } else {
-                    newState = {
-                        hasMorePosts: false,
-                        loading: false
-                    };
+                    this.updatePost(type, response);
                 }
 
-                if( this._isMounted ){
+                if (this._isMounted) {
                     this.setState({
                         ...this.state,
-                        ...newState
+                        loading: false,
                     });
                 }
             })
-            .catch(error => {
+            .catch((error) => {
                 console.warn("Warning al obtener post paginados", error);
             });
     };
 
-    handlePosts = () => {
-        this.getPosts(this.state.page);
-        if( this._isMounted ){
+    handlePosts = (type) => {
+        this.getPosts(type);
+        if (this._isMounted) {
             this.setState({
                 ...this.state,
-                loading: true
+                loading: true,
             });
         }
     };
@@ -103,8 +91,12 @@ class Home extends Component {
             html.offsetHeight
         );
 
-        if( scroll >= (height - 60 )  && this.state.hasMorePosts && !this.state.loading ){
-            this.handlePosts( this.state.page );
+        if (
+            scroll >= height - 60 &&
+            this.props.hasMorePosts &&
+            !this.state.loading
+        ) {
+            this.handlePosts("HOME_POST_NEXT_PAGE");
         }
     };
 
@@ -132,7 +124,7 @@ class Home extends Component {
                         </Row>
                     </div>
                     <div className="custom-feed">
-                        {this.state.posts.map((post, index) => {
+                        {this.props.posts.map((post, index) => {
                             return (
                                 <Link to={"post/" + post.post_name} key={index}>
                                     <EntradaFeed data={post} />
@@ -149,4 +141,13 @@ class Home extends Component {
     }
 }
 
-export default Home;
+function mapStateToProps(state) {
+    return {
+        posts: state.homePost.posts,
+        page: state.homePost.page,
+        length: state.homePost.length,
+        hasMorePosts: state.homePost.hasMorePosts
+    };
+}
+
+export default connect(mapStateToProps)(Home);
