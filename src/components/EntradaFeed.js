@@ -3,6 +3,7 @@ import {
     Card
 } from 'react-bootstrap';
 import { getPostById } from '../services/wordpress/wordpressServices';
+import { getDescripcion } from "../tools/wordpressTools";
 
 const EntradaFeed = ( params ) => {
     const { data } = params;
@@ -18,31 +19,6 @@ const EntradaFeed = ( params ) => {
         }).catch( error => {
             console.error("Error al obtener meta del post", error);
         });
-    }
-
-    const getDescripcion = ( content ) => {
-        
-        if ( !content ) return "";
-
-        let contentArray = content.split("<p>");
-        contentArray = contentArray.map( paragraph => {
-            paragraph = paragraph.replace("</p>", "" );
-            paragraph = paragraph.replace("<!-- wp:paragraph -->", "" );
-            paragraph = paragraph.replace("<!-- /wp:paragraph -->", "" );
-            paragraph = paragraph.replace("\n", "" );
-
-            return paragraph.trim().substring(0, 100) + "...";
-        });
-
-        contentArray.filter( string => {
-            if( !string.trim() ){
-                return true;
-            }else{
-                return false;
-            }
-        });
-
-        return contentArray[1];
     }
 
     useEffect(() => {

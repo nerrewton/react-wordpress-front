@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { Helmet } from "react-helmet";
 
 import LeftAside from "../components/LeftAside";
 import RightAside from "../components/RightAside";
@@ -102,41 +103,58 @@ class Home extends Component {
 
     render() {
         return (
-            <div className="custom-container">
-                <LeftAside />
-                <RightAside />
-                <div className="custom-content">
-                    <div className="custom-buscador">
-                        <Row>
-                            <Col>
-                                <Buscador />
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col>
-                                <span className="custom-letra-opaca">
-                                    Filtrar resultados
-                                </span>
-                                {/*
+            <>
+                <Helmet>
+                    <title>Cockycode</title>
+                    <meta
+                        name="description"
+                        content="Cockycode herramientas gratuitas para desarrolladores"
+                    />
+                    <meta name="keywords" content="cockycode,dias festivos,dias festivos csv,dias festivos xls,dias festivos excel,contador de caracteres,contador de palabras,tildes to acute,tildes to html,eliminar espacios en blanco,exportar dias festivos"/>
+                    <meta name="author" content="Gerardo Arteaga" />
+                    <meta name="copyright" content="Gerardo Arteaga" />
+                    <meta name="robots" content="index"/>
+                    <meta name="robots" content="follow"/>
+                </Helmet>
+                <div className="custom-container">
+                    <LeftAside />
+                    <RightAside />
+                    <div className="custom-content">
+                        <div className="custom-buscador">
+                            <Row>
+                                <Col>
+                                    <Buscador />
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <span className="custom-letra-opaca">
+                                        Filtrar resultados
+                                    </span>
+                                    {/*
                                 <FiltroBusqueda />
                                 */}
-                            </Col>
-                        </Row>
-                    </div>
-                    <div className="custom-feed">
-                        {this.props.posts.map((post, index) => {
-                            return (
-                                <Link to={"post/" + post.post_name} key={index}>
-                                    <EntradaFeed data={post} />
-                                </Link>
-                            );
-                        })}
-                        <div id="no_post" className="custom-no-entries">
-                            No hay más resultados!
+                                </Col>
+                            </Row>
+                        </div>
+                        <div className="custom-feed">
+                            {this.props.posts.map((post, index) => {
+                                return (
+                                    <Link
+                                        to={"post/" + post.post_name}
+                                        key={index}
+                                    >
+                                        <EntradaFeed data={post} />
+                                    </Link>
+                                );
+                            })}
+                            <div id="no_post" className="custom-no-entries">
+                                No hay más resultados!
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </>
         );
     }
 }
@@ -146,7 +164,7 @@ function mapStateToProps(state) {
         posts: state.homePost.posts,
         page: state.homePost.page,
         length: state.homePost.length,
-        hasMorePosts: state.homePost.hasMorePosts
+        hasMorePosts: state.homePost.hasMorePosts,
     };
 }
 

@@ -1,12 +1,14 @@
 import Home from '../pages/Home';
 import Ventas from '../pages/Ventas';
 import Nosotros from '../pages/Nosotros';
+import Tool from "../pages/Tool";
 import NotFound from '../pages/NotFound';
 
 const mapping = {
     "Home": Home,
     "Ventas": Ventas,
-    "Nosotros": Nosotros
+    "Nosotros": Nosotros,
+    "Tool": Tool
 }
 
 export const getComponent = ( nombre = "" ) => {
