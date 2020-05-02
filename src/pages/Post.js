@@ -1,12 +1,12 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
-import { Row, Col, Button } from "react-bootstrap";
-import { Helmet } from "react-helmet";
+import { connect } from "react-redux";
+import { Row, Col } from "react-bootstrap";
 
 import { getPostByUrl } from "../services/wordpress/wordpressServices";
 import { dateToString } from "../tools/dateTools";
 import MobileAds from "../components/MobileAds";
-import { getDescripcion } from "../tools/wordpressTools";
+import MetaData from "../components/MetaData";
+import GoBack from "../components/GoBack";
 
 class Post extends Component {
     constructor(props) {
@@ -21,7 +21,10 @@ class Post extends Component {
         };
 
         this.abortController = new AbortController();
-        this.goBack = this.goBack.bind(this);
+    }
+
+    updateMetaData(type = "", metadata = {}) {
+        this.props.dispatch({ type, metadata });
     }
 
     getPostContent() {
@@ -48,6 +51,14 @@ class Post extends Component {
                         ...this.state,
                         ...newState,
                     });
+
+                    this.updateMetaData("SET_META_DATA", {
+                        title: response.post_title,
+                        description: response.post_content,
+                        type: "article",
+                        author: response.WpUsers.display_name,
+                        url: window.location.href
+                    });
                 }
             })
             .catch((error) => {
@@ -55,12 +66,10 @@ class Post extends Component {
             });
     }
 
-    goBack() {
-        this.props.history.goBack();
-    }
-
     componentDidMount() {
         this.getPostContent();
+
+        window.addEventListener("scroll", () => {});
     }
 
     componentWillUnmount() {
@@ -68,30 +77,9 @@ class Post extends Component {
     }
 
     render() {
-        const contentMeta = getDescripcion(this.state.content);
         return (
             <>
-                {this.state.title ? (
-                    <Helmet>
-                        <title>{this.state.title}</title>
-                        <meta
-                            name="description"
-                            content={contentMeta}
-                        />
-                        <meta name="robots" content="index"/>
-                        <meta name="author" content={this.state.author} />
-                        <meta name="copyright" content={this.state.author} />
-
-                        <meta property="og:type" content="article" />
-                        <meta property="og:title" content={this.state.title} />
-                        <meta property="og:description" content={contentMeta} />
-                        <meta property="og:image" content="LINK A LA IMAGEN DESTACADA" />
-                        <meta property="og:url" content={window.location.href} />
-                        <meta property="og:site_name" content="cockycode" />
-                    </Helmet>
-                ) : (
-                    ""
-                )}
+                <MetaData />
                 <div className="custom-container">
                     <div className="custom-content-post">
                         <article className="post">
@@ -118,9 +106,7 @@ class Post extends Component {
                             ></section>
                             <section className="post-footer"></section>
                         </article>
-                        <Button variant="dark" size="lg" onClick={this.goBack}>
-                            Volver
-                        </Button>
+                        <GoBack />
                     </div>
                     <MobileAds />
                 </div>
@@ -129,4 +115,4 @@ class Post extends Component {
     }
 }
 
-export default withRouter(Post);
+export default connect()(Post);

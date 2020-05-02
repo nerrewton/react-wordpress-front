@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { Helmet } from "react-helmet";
 
 import LeftAside from "../components/LeftAside";
 import RightAside from "../components/RightAside";
 import Buscador from "../components/Buscador";
 import EntradaFeed from "../components/EntradaFeed";
+import MetaData from "../components/MetaData";
 import { getPostPaginate } from "../services/wordpress/wordpressServices";
 
 class Home extends Component {
@@ -28,6 +28,10 @@ class Home extends Component {
         this.props.dispatch({ type, posts });
     }
 
+    updateMetaData(type = "", metadata = {}) {
+        this.props.dispatch({ type, metadata });
+    }
+
     componentDidMount() {
         this._isMounted = true;
         if (this.props.posts.length <= 0) {
@@ -35,6 +39,17 @@ class Home extends Component {
         } else {
             this.updatePost();
         }
+
+        this.updateMetaData("SET_META_DATA", {
+            title: "Cockycode",
+            description:
+                "Cockycode herramientas gratuitas para desarrolladores",
+            type: "website",
+            keywords:
+                "cockycode,dias festivos,dias festivos csv,dias festivos xls,dias festivos excel,contador de caracteres,contador de palabras,tildes to acute,tildes to html,eliminar espacios en blanco,exportar dias festivos",
+            author: "Gerardo Arteaga",
+            url: window.location.href,
+        });
 
         window.addEventListener("scroll", this.handleScroll);
     }
@@ -104,18 +119,7 @@ class Home extends Component {
     render() {
         return (
             <>
-                <Helmet>
-                    <title>Cockycode</title>
-                    <meta
-                        name="description"
-                        content="Cockycode herramientas gratuitas para desarrolladores"
-                    />
-                    <meta name="keywords" content="cockycode,dias festivos,dias festivos csv,dias festivos xls,dias festivos excel,contador de caracteres,contador de palabras,tildes to acute,tildes to html,eliminar espacios en blanco,exportar dias festivos"/>
-                    <meta name="author" content="Gerardo Arteaga" />
-                    <meta name="copyright" content="Gerardo Arteaga" />
-                    <meta name="robots" content="index"/>
-                    <meta name="robots" content="follow"/>
-                </Helmet>
+                <MetaData />
                 <div className="custom-container">
                     <LeftAside />
                     <RightAside />

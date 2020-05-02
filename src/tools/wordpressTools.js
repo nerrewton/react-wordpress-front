@@ -3,6 +3,7 @@ export const getDescripcion = ( content ) => {
     if ( !content ) return "";
 
     let contentArray = content.split("<p>");
+
     contentArray = contentArray.map( paragraph => {
         paragraph = paragraph.replace("</p>", "" );
         paragraph = paragraph.replace("<!-- wp:paragraph -->", "" );
@@ -19,6 +20,8 @@ export const getDescripcion = ( content ) => {
             return false;
         }
     });
+
+    if( contentArray.length <= 1 ) return content;
 
     return contentArray[1];
 }
