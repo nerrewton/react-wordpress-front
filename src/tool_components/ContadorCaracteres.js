@@ -25,7 +25,7 @@ class ContadorCaracteres extends Component {
         const tempBlankSpaces = fieldName === "blankSpaces" ? fieldValue : this.state.blankSpaces;
         let tempTextToProcess = fieldName === "textToProcess" ? fieldValue : this.state.textToProcess;
         const tempCounterType = fieldName === "counterType" ? parseInt( fieldValue ): parseInt( this.state.counterType );
-        let counterTypeText = fieldName === "counterType" && parseInt( fieldValue ) === 1 ? "Caracteres" : "Palabras";
+        let counterTypeText = fieldName === "counterType" && parseInt( fieldValue ) === 1 ? "Caracteres" : fieldName === "counterType" ? "Palabras" : this.state.counterTypeText;
         let textResult = null;
 
 
