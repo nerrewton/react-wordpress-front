@@ -5,36 +5,62 @@ import { connect } from "react-redux";
 import LeftAside from "../components/LeftAside";
 import RightAside from "../components/RightAside";
 import MetaData from "../components/MetaData";
+import ExportarFestivos from "../tool_components/ExportarFestivos";
+import ContadorCaracteres from "../tool_components/ContadorCaracteres";
+import configTools from "../testParameters/toolsParams.json";
+
+const components = {
+    "ExportarFestivos": ExportarFestivos,
+    "ContadorCaracteres": ContadorCaracteres
+}
 
 class Tool extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            titulo: "Herramientas para desarrolladores",
+            title: "Herramientas para desarrolladores",
             description: "",
-            ayuda: "",
-            content:
-                "Selecciona cualquiera de las opciociones disponibles, todas son totalmente gratis.",
+            help: "",
+            ToolComponent: null
         };
     }
 
     updateMetaData(type = "", metadata = {}) {
         this.props.dispatch({ type, metadata });
     }
-    
-    componentDidMount(){
+
+    setTool(){
+        const path = window.location.pathname;
+        const tool = configTools.find( (element, index) =>{
+            return element.url === path;
+        });
+
+        if( !tool ) return;
+
+        this.setState({
+            ...this.state,
+            title: tool.title,
+            description: tool.description,
+            ToolComponent: components[tool.component]
+        });
+
         this.updateMetaData("SET_META_DATA", {
-            title: "Herramientas para desarrolladores",
-            description: "Cockycode herramientas gratuitas para desarrolladores",
+            title: tool.title,
+            description: tool.description,
             type: "page",
             author: "Gerardo Arteaga",
             url: window.location.href,
-            keywords: "cockycode,dias festivos,dias festivos csv,dias festivos xls,dias festivos excel,contador de caracteres,contador de palabras,tildes to acute,tildes to html,eliminar espacios en blanco,exportar dias festivos"
+            keywords: tool.keywords
         });
+    }
+    
+    componentDidMount(){
+        this.setTool();        
     }
 
     render() {
+        const CurrentTool = this.state.ToolComponent;
         return (
             <>
                 <MetaData />
@@ -43,13 +69,10 @@ class Tool extends Component {
                     <RightAside />
                     <div className="custom-content">
                         <section className="tool-header">
-                            <h1 className="text-center">{this.state.titulo}</h1>
+                            <h1 className="text-center">{this.state.title}</h1>
                         </section>
-                        <section className="tool-content">
-                            <p>{this.state.descripcion}</p>
-                        </section>
-                        <section className="tool-footer">
-                            <Button variant="info">Ayuda</Button>
+                        <section className="tool-content mt-5">
+                            {CurrentTool?<CurrentTool/>:null}
                         </section>
                     </div>
                 </div>

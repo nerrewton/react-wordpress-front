@@ -9,9 +9,9 @@ class RightAside extends Component {
         return (
             <div className="custom-aside-right">
                 {
-                    arrayTools.map( (tool, key) => (
-                        <CardTool key={key} url={tool.url} title={tool.title} image={getImage( tool.image )} />
-                    ))
+                    arrayTools.map( (tool, key) => {
+                        return tool.active ?<CardTool key={key} url={tool.url} title={tool.title} image={getImage( tool.image )} />:null
+                    })
                 }
             </div>
         );
