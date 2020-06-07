@@ -10,6 +10,7 @@ const EntradaFeed = ( params ) => {
     const [ meta, setMeta ] = useState({});
     
     const getMetaPost = ( postId ) => {
+        console.log("getMetaPost -> postId", postId)
         const promiseMeta = getPostById( postId );
 
         promiseMeta.then( response => {
@@ -23,10 +24,11 @@ const EntradaFeed = ( params ) => {
 
     useEffect(() => {
         if( data && data.WpPostMeta && data.WpPostMeta.length > 0 ){
+            console.log("EntradaFeed -> data", data)
             let metaId = null;
             //Obtiene el meta relacionado con la imagen destacada
             data.WpPostMeta.forEach( metaItem => {
-                if( metaItem.meta_key === "_thumbnail_id" ){
+                if( metaItem.meta_key === "_thumbnail_id" || metaItem.meta_key==="_edit_lock"){
                     metaId = parseInt( metaItem.meta_value );
                 }
             });
