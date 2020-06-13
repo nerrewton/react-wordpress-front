@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button } from "react-bootstrap";
+import CardTool from "../components/CardTool";
 import { connect } from "react-redux";
 
 import LeftAside from "../components/LeftAside";
@@ -7,6 +7,7 @@ import RightAside from "../components/RightAside";
 import MetaData from "../components/MetaData";
 import ExportarFestivos from "../tool_components/ExportarFestivos";
 import ContadorCaracteres from "../tool_components/ContadorCaracteres";
+import { getImage } from "../tools/imagesTools";
 import configTools from "../testParameters/toolsParams.json";
 
 const components = {
@@ -72,7 +73,10 @@ class Tool extends Component {
                             <h1 className="text-center">{this.state.title}</h1>
                         </section>
                         <section className="tool-content mt-5">
-                            {CurrentTool?<CurrentTool/>:null}
+                            {CurrentTool?<CurrentTool/>
+                            :configTools.map( (tool, key) => {
+                                return tool.active ?<CardTool key={key} url={tool.url} title={tool.title} image={getImage( tool.image )} />:null
+                            })}
                         </section>
                     </div>
                 </div>

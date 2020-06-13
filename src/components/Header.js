@@ -6,6 +6,7 @@ import {
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import configuracion from '../config/configuration.json';
+import logoImg from "../assets/logo_fondo_negro.jpg";
 
 const Header = props => {
     const { menus } = props;
@@ -14,7 +15,8 @@ const Header = props => {
     return (
         <Navbar bg="light" expand="lg" className="custom-header">
             <Link to="/" className="navbar-brand">
-                {configuracion.nombre_app}
+                <img src={logoImg} className="logo-img" alt="Logo cockycode"/>
+                <span className="logo-name">{configuracion.nombre_app}</span>
             </Link>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
