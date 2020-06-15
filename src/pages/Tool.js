@@ -1,7 +1,9 @@
 import React, { Component } from "react";
-import CardTool from "../components/CardTool";
+import { compose } from "redux";
 import { connect } from "react-redux";
+import { withRouter } from 'react-router-dom';
 
+import CardTool from "../components/CardTool";
 import LeftAside from "../components/LeftAside";
 import RightAside from "../components/RightAside";
 import MetaData from "../components/MetaData";
@@ -16,6 +18,9 @@ const components = {
 }
 
 class Tool extends Component {
+    history = null;
+    triggerTools = true;
+
     constructor(props) {
         super(props);
 
@@ -57,7 +62,15 @@ class Tool extends Component {
     }
     
     componentDidMount(){
-        this.setTool();        
+        this.history = this.props.history;
+        this.history.listen(() =>{
+            if( this.triggerTools ) this.setTool();
+        });
+        this.setTool();
+    }
+
+    componentWillUnmount(){
+        this.triggerTools = false;
     }
 
     render() {
@@ -85,4 +98,4 @@ class Tool extends Component {
     }
 }
 
-export default connect()(Tool);
+export default compose( withRouter, connect() )(Tool);
