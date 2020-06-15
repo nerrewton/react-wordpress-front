@@ -2,9 +2,10 @@
     {
         "url": "/tool/exportar-dias-festivos",
         "image": "festivos_excel",
-        "title": "Exportar días festivos",
+        "title": "Consultar y exportar días festivos",
         "description": "consultar dias festivos y exportar días festivos en excel.",
         "component": "ExportarFestivos",
+        "keywords": "días festivos, consultar días festivos, exportar días festivos, hoy es festivo",
         "active": true
     },
     {
@@ -13,7 +14,7 @@
         "title": "Contador de caracteres y palabras",
         "description": "Contador de caracteres y contador de palabras",
         "component": "ContadorCaracteres",
-        "keywords": "Contador caracteres online,contador caracteres,contador palabras",
+        "keywords": "contador caracteres online,contador caracteres,contador palabras",
         "active": true
     }
 ]
