@@ -3,13 +3,16 @@ import {
     Row,
     Col,
     Form,
-    Card
+    Card,
+    Button
 } from "react-bootstrap";
+import Toast from 'react-bootstrap/Toast'
 import {
     FontAwesomeIcon
 } from '@fortawesome/react-fontawesome';
 import {
-    faCalendar
+    faCalendar,
+    faFileExcel
 } from '@fortawesome/free-solid-svg-icons';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
@@ -20,7 +23,8 @@ import MomentLocaleUtils, {
 } from 'react-day-picker/moment';
 import 'moment/locale/es';
 import { getAllFilteredHolyDays } from "../services/dia_festivo/diaFestivoServices";
-import { monthNameByNumber } from "../tools/dateTools";
+import { monthNameByNumber, dateToString } from "../tools/dateTools";
+import { exportToXlsx } from "../tools/exportTools";
 
 class ExportarFestivos extends Component {
     constructor(props){
@@ -30,15 +34,18 @@ class ExportarFestivos extends Component {
         this.abortController = new AbortController();
 
         this.state = {
+            showToast: false,
+            toastMessage: "",
             diasFestivos: [],
-            fechaInicio: formatDate( new Date()),
-            fechaFin: formatDate( new Date()),
+            fechaInicio: new Date(),
+            fechaFin: new Date(),
             paisCodigo: "CO",
             descripcion: ""
         };
 
         this.handleFiledChanges = this.handleFiledChanges.bind( this );
         this.handleDayPick = this.handleDayPick.bind( this );
+        this.handleExportClick = this.handleExportClick.bind( this );
 
     }
 
@@ -52,7 +59,7 @@ class ExportarFestivos extends Component {
         );
 
         promiseDiasFestivos.then( response => {
-            if( response && response.length > 0 ){
+            if( this._isMounted && response && response.length > 0 ){
                 this.setState({
                     ...this.state,
                     diasFestivos: response
@@ -81,6 +88,61 @@ class ExportarFestivos extends Component {
             ...this.state,
             [name]: date
         });        
+    }
+
+    handleExportClick(){
+        const diasFestivos = this.state.diasFestivos;
+        const fechaInicio = this.state.fechaInicio;
+        const fechaFin = this.state.fechaFin;
+        const fiTime = fechaInicio.getTime();
+        const ffTime = fechaFin.getTime();
+        const diff = ffTime - fiTime;
+        const diasEntreFechas = Math.ceil( diff / (1000 * 3600 * 24) );
+        let data = [];
+
+        if( diff < 0 ) {
+            this.setState({
+                ...this.state,
+                showToast: true,
+                toastMessage: "La Fecha fin debe ser mayor a Fecha inicio."
+            });
+
+            return;
+        }else if ( diasEntreFechas === 0 ) {
+            const mesNumero = fechaInicio.getMonth() + 1; //January is 1
+            const diaNumero = fechaInicio.getDate();
+            const dia = diasFestivos.filter( ( festivo, index ) => ( mesNumero === parseInt( festivo.mes_numero ) && diaNumero === parseInt( festivo.dia_numero ) ))
+
+            if( !dia || dia.length === 0 ) return;
+
+            data = [{
+                Fecha: dateToString( fechaInicio ),
+                Descripcion: dia[0].descripcion,
+                Pais: dia[0].pais_nombre
+            }];
+        }else {
+            for( let i = 0; i < diasEntreFechas; i++ ){
+                let fecha = Object.assign( fechaInicio );
+
+                if( i !== 0 ){
+                    fecha.setDate(fecha.getDate() + 1);
+                }
+                
+                const mesNumero = fecha.getMonth() + 1; //January is 1
+                const diaNumero = fecha.getDate();
+                const dia = diasFestivos.filter( ( festivo, index ) => ( mesNumero === parseInt( festivo.mes_numero ) && diaNumero === parseInt( festivo.dia_numero ) ))
+
+                if( !dia || dia.length === 0 ) continue;
+
+                data.push({
+                    Fecha: dateToString( fecha ),
+                    Descripcion: dia[0].descripcion,
+                    Pais: dia[0].pais_nombre
+                });
+            }
+        }
+
+        exportToXlsx( data, "Dias Festivos - descargado desde Cockycode");
     }
 
     componentDidMount(){
@@ -150,7 +212,14 @@ class ExportarFestivos extends Component {
                                 <Form.Control as="input" name="descripcion" placeholder="Ejem: Navidad" value={this.state.descripcion} onChange={this.handleFiledChanges}/>
                             </Form.Group>
                         </Col>
-                    </Row>                    
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Form.Group>
+                                <Button variant="success" onClick={ this.handleExportClick }><FontAwesomeIcon icon={faFileExcel} /> Exportar excel</Button>
+                            </Form.Group>
+                        </Col>
+                    </Row>                  
                 </Form>
                 <div>
                     <span className="leyenda-dias-festivos">Los días festivos mostrados abajo son generales, el botón de <strong>Exportar</strong> descarga en Excel los días con las fechas exactas que se encuentran entre <strong>Fecha inicio</strong> y <strong>Fecha fin</strong>.</span>
@@ -161,6 +230,14 @@ class ExportarFestivos extends Component {
                         </Card>
                     ))
                     : null}
+                </div>
+                <div className="toast-styles">
+                    <Toast onClose={() => this.setState({...this.state, showToast: false})} show={ this.state.showToast } delay={3000} autohide>
+                        <Toast.Header>
+                            <strong className="mr-auto">Mensaje</strong>
+                        </Toast.Header>
+                        <Toast.Body>{this.state.toastMessage}</Toast.Body>
+                    </Toast>
                 </div>
             </Fragment>
         );
