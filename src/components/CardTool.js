@@ -6,7 +6,7 @@ const CardTool = ( props ) => {
     if( !props.title ) return null;
     return (
         <Link to={props.url} className="link-card-tool">
-            <Card>
+            <Card className="card-tool-item">
                 <Card.Body>
                     <Card.Text>{ props.title }</Card.Text>
                 </Card.Body>
