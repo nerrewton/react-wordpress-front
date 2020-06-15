@@ -5,7 +5,7 @@
         "title": "Exportar días festivos",
         "description": "consultar dias festivos y exportar días festivos en excel.",
         "component": "ExportarFestivos",
-        "active": false
+        "active": true
     },
     {
         "url": "/tool/contador-de-caracteres",

@@ -60,14 +60,14 @@ class ContadorCaracteres extends Component {
                         <Form>
                             <Form.Group>
                                 <Row>
-                                    <Col>
+                                    <Col md="6" xs="12">
                                         <Form.Label>Tipo de contador</Form.Label>
                                         <Form.Control as="select" name="counterType" value={this.state.counterType} onChange={this.handleFiledChanges}>
                                             <option value="1">Contador de caracteres</option>
                                             <option value="2">Contador de palabras</option>
                                         </Form.Control>
                                     </Col>
-                                    <Col>
+                                    <Col md="6" xs="12">
                                         <Form.Label>&nbsp;</Form.Label>
                                         <Form.Check type="checkbox" name="blankSpaces" label="Incluir espacios en blanco?" checked={this.state.blankSpaces} onChange={this.handleFiledChanges}/>
                                     </Col>
