@@ -51,3 +51,28 @@ export const dateToString = ( date = new Date(), format = "yyyy-mm-dd" ) => {
 
     return dateString;
 }
+
+export const monthNameByNumber = ( monthNumber = null ) => {
+    const arrayMonths = [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre"
+    ];
+
+    if( !monthNumber ) return "";
+    
+    const mes = parseInt(monthNumber);
+    
+    if( mes <= 0 || mes > 12 ) return "";
+    return  arrayMonths[ mes - 1 ];
+
+}
