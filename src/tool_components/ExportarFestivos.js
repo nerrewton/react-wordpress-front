@@ -19,27 +19,80 @@ import MomentLocaleUtils, {
     parseDate,
 } from 'react-day-picker/moment';
 import 'moment/locale/es';
+import { getAllFilteredHolyDays } from "../services/dia_festivo/diaFestivoServices";
 import { monthNameByNumber } from "../tools/dateTools";
 
-const diasFestivos = [
-    {
-        mes_numero: 6,
-        dia_numero: 15,
-        descripcion: "San Jose, San Pedro",
-        pais_codigo: "CO",
-        pais_nombre: "Colombia"
-    },
-    {
-        mes_numero: 12,
-        dia_numero: 25,
-        descripcion: "navidad",
-        pais_codigo: "CO",
-        pais_nombre: "Colombia"
-    }
-];
-
 class ExportarFestivos extends Component {
-    state = {  }
+    constructor(props){
+        super(props);
+        
+        this._isMounted = false;
+        this.abortController = new AbortController();
+
+        this.state = {
+            diasFestivos: [],
+            fechaInicio: formatDate( new Date()),
+            fechaFin: formatDate( new Date()),
+            paisCodigo: "CO",
+            descripcion: ""
+        };
+
+        this.handleFiledChanges = this.handleFiledChanges.bind( this );
+        this.handleDayPick = this.handleDayPick.bind( this );
+
+    }
+
+    loadDiasFestivos(){
+        const promiseDiasFestivos = getAllFilteredHolyDays(
+            null,
+            null,
+            this.state.descripcion,
+            this.state.paisCodigo,
+            this.abortController.signal
+        );
+
+        promiseDiasFestivos.then( response => {
+            if( response && response.length > 0 ){
+                this.setState({
+                    ...this.state,
+                    diasFestivos: response
+                });
+            }
+            
+        }).catch( error => console.warn(error) );
+    }
+
+    handleFiledChanges( event ){
+        const name = event.target.name;
+        const value = event.target.value;
+
+        this.setState({
+            ...this.state,
+            [name]: value
+        });
+
+        this.loadDiasFestivos();
+    }
+
+    handleDayPick( date, modifiers, input ){
+        const name = input.props.inputProps.name;
+
+        this.setState({
+            ...this.state,
+            [name]: date
+        });        
+    }
+
+    componentDidMount(){
+        this._isMounted = true;
+        this.loadDiasFestivos();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
+        this.abortController.abort();
+    }
+
     render() { 
         return (
             <Fragment>
@@ -49,12 +102,13 @@ class ExportarFestivos extends Component {
                             <Form.Group>
                                 <Form.Label>Fecha inicio</Form.Label>
                                 <DayPickerInput
-                                inputProps={{className: "form-control", name: "fecha_inicio"}}
+                                inputProps={{className: "form-control", name: "fechaInicio", readOnly: true }}
+                                value={this.state.fechaInicio}
+                                onDayChange={ this.handleDayPick }
                                 style={{width: "100%"}}
                                 formatDate={formatDate}
                                 parseDate={parseDate}
                                 placeholder={`${formatDate( new Date())}`}
-                                className="form-control"
                                 dayPickerProps={{
                                     locale: 'es',
                                     localeUtils: MomentLocaleUtils,
@@ -66,12 +120,13 @@ class ExportarFestivos extends Component {
                             <Form.Group>
                                 <Form.Label>Fecha fin</Form.Label>
                                 <DayPickerInput
-                                inputProps={{className: "form-control", name: "fecha_fin"}}
+                                inputProps={{className: "form-control", name: "fechaFin", readOnly: true }}
+                                value={this.state.fechaFin}
+                                onDayChange={ this.handleDayPick }
                                 style={{width: "100%"}}
                                 formatDate={formatDate}
                                 parseDate={parseDate}
                                 placeholder={`${formatDate( new Date())}`}
-                                className="form-control"
                                 dayPickerProps={{
                                     locale: 'es',
                                     localeUtils: MomentLocaleUtils,
@@ -84,7 +139,7 @@ class ExportarFestivos extends Component {
                         <Col md="6" xs="12">
                             <Form.Group>
                                 <Form.Label>País</Form.Label>
-                                <Form.Control as="select" name="pais_codigo">
+                                <Form.Control as="select" name="paisCodigo" value={this.state.paisCodigo} onChange={this.handleFiledChanges}>
                                     <option value="CO">Colombia</option>
                                 </Form.Control>
                             </Form.Group>
@@ -92,15 +147,15 @@ class ExportarFestivos extends Component {
                         <Col md="6" xs="12">
                             <Form.Group>
                                 <Form.Label>Buscar por descripción</Form.Label>
-                                <Form.Control as="input" name="descripcion" placeholder="Ejem: Navidad"/>
+                                <Form.Control as="input" name="descripcion" placeholder="Ejem: Navidad" value={this.state.descripcion} onChange={this.handleFiledChanges}/>
                             </Form.Group>
                         </Col>
                     </Row>                    
                 </Form>
                 <div>
                     <span className="leyenda-dias-festivos">Los días festivos mostrados abajo son generales, el botón de <strong>Exportar</strong> descarga en Excel los días con las fechas exactas que se encuentran entre <strong>Fecha inicio</strong> y <strong>Fecha fin</strong>.</span>
-                    { diasFestivos?
-                    diasFestivos.map( (dia, key) => (
+                    { this.state.diasFestivos?
+                    this.state.diasFestivos.map( (dia, key) => (
                         <Card key={key} className="mb-3">
                             <Card.Body><FontAwesomeIcon icon={faCalendar} />{" "}<strong>{dia.dia_numero + " de " + monthNameByNumber(dia.mes_numero) + ". " + dia.descripcion}</strong></Card.Body>
                         </Card>
