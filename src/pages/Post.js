@@ -84,7 +84,7 @@ class Post extends Component {
                     <div className="custom-content-post">
                         <article className="post">
                             <section className="post-header">
-                                <h1>{this.state.title}</h1>
+                                <h1 className="text-title">{this.state.title}</h1>
                                 <Row>
                                     <Col>
                                         <span className="float-left">

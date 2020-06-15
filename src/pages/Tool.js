@@ -68,9 +68,9 @@ class Tool extends Component {
                 <div className="custom-container">
                     <LeftAside />
                     <RightAside />
-                    <div className="custom-content">
+                    <div className="custom-content p-3">
                         <section className="tool-header">
-                            <h1 className="text-center">{this.state.title}</h1>
+                            <h1 className="text-center text-title">{this.state.title}</h1>
                         </section>
                         <section className="tool-content mt-5">
                             {CurrentTool?<CurrentTool/>
