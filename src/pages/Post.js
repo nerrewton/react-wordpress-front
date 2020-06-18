@@ -4,7 +4,6 @@ import { Row, Col } from "react-bootstrap";
 
 import { getPostByUrl } from "../services/wordpress/wordpressServices";
 import { dateToString } from "../tools/dateTools";
-import MobileAds from "../components/MobileAds";
 import MetaData from "../components/MetaData";
 import GoBack from "../components/GoBack";
 
@@ -108,7 +107,6 @@ class Post extends Component {
                         </article>
                         <GoBack />
                     </div>
-                    <MobileAds />
                 </div>
             </>
         );
