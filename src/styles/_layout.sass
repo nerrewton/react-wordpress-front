@@ -10,6 +10,15 @@ $gray-background-color: #f8f9fa
     border-radius: 12px
     padding: 12px 12px 12px 12px
     box-sizing: border-box
+%content-basic
+    width: 600px
+    margin: auto
+    margin-top: 12px
+    border-radius: 12px
+    padding: 0px 6px 3px 6px
+    position: relative
+    box-sizing: border-box
+    margin-bottom: 24px
 
 .custom-container
     width: 100%
@@ -59,21 +68,40 @@ $gray-background-color: #f8f9fa
                 color: #000000
 
     .custom-content-post
-        width: 600px
-        margin: auto
-        margin-top: 12px
-        border-radius: 12px
-        padding: 0px 6px 3px 6px
-        position: relative
-        box-sizing: border-box
-        margin-bottom: 24px
-
+        @extend %content-basic
+    .custom-content-page
+        @extend %content-basic
 .toast-styles
     position: fixed
     top: 12px
     right: 12px
     margin: auto
     z-index: 1
+
+code
+    background: #f4f4f4
+    border: 1px solid #ddd
+    border-left: 3px solid #f36d33
+    page-break-inside: avoid
+    font-size: 15px
+    line-height: 1.6  
+    max-width: 100%
+    overflow: auto
+    padding: .6em .6em
+    display: inline-block
+    word-wrap: break-word
+
+figcaption
+    font-size: 0.8rem
+    text-align: center
+    margin: 0
+    font-style: italic
+    opacity: 0.6
+.spinnerCustom
+    display: block
+    margin: auto
+    margin-top: 30px
+    margin-bottom: 30px
 
 @media screen and ( max-width: 768px )
     .text-title

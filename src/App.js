@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
 import Post from "./pages/Post";
+import Page from "./pages/Page";
 import Tool from "./pages/Tool";
 import { getComponent } from "./routes/routeComponentMap";
 import portalMenus from "./routes/routesDefinition.json";
@@ -27,6 +28,9 @@ const App = () => {
                 </Route>
                 <Route exact path="/tool/:tool_url?">
                     <Tool />
+                </Route>
+                <Route exact path="/page/:page_url">
+                    <Page />
                 </Route>
                 <Route path="*">
                     <NotFound />

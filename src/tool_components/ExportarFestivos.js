@@ -4,7 +4,8 @@ import {
     Col,
     Form,
     Card,
-    Button
+    Button,
+    Spinner
 } from "react-bootstrap";
 import Toast from 'react-bootstrap/Toast'
 import {
@@ -34,6 +35,7 @@ class ExportarFestivos extends Component {
         this.abortController = new AbortController();
 
         this.state = {
+            loading: false,
             showToast: false,
             toastMessage: "",
             diasFestivos: [],
@@ -62,7 +64,8 @@ class ExportarFestivos extends Component {
             if( this._isMounted && response && response.length > 0 ){
                 this.setState({
                     ...this.state,
-                    diasFestivos: response
+                    diasFestivos: response,
+                    loading: false
                 });
             }
             
@@ -75,10 +78,9 @@ class ExportarFestivos extends Component {
 
         this.setState({
             ...this.state,
-            [name]: value
-        });
-
-        this.loadDiasFestivos();
+            [name]: value,
+            loading: true
+        }, () => this.loadDiasFestivos() );        
     }
 
     handleDayPick( date, modifiers, input ){
@@ -147,7 +149,10 @@ class ExportarFestivos extends Component {
 
     componentDidMount(){
         this._isMounted = true;
-        this.loadDiasFestivos();
+        this.setState({
+            ...this.state,
+            loading: true
+        }, () => this.loadDiasFestivos() );
     }
 
     componentWillUnmount() {
@@ -203,6 +208,8 @@ class ExportarFestivos extends Component {
                                 <Form.Label>País</Form.Label>
                                 <Form.Control as="select" name="paisCodigo" value={this.state.paisCodigo} onChange={this.handleFiledChanges}>
                                     <option value="CO">Colombia</option>
+                                    <option value="EC">Ecuador</option>
+                                    <option value="MX">México</option>
                                 </Form.Control>
                             </Form.Group>
                         </Col>
@@ -223,7 +230,9 @@ class ExportarFestivos extends Component {
                 </Form>
                 <div>
                     <span className="leyenda-dias-festivos">Los días festivos mostrados abajo son generales, el botón de <strong>Exportar</strong> descarga en Excel los días con las fechas exactas que se encuentran entre <strong>Fecha inicio</strong> y <strong>Fecha fin</strong>.</span>
-                    { this.state.diasFestivos?
+                    { this.state.loading ?
+                    <Spinner animation="border" variant="warning" className="spinnerCustom"/>
+                    : this.state.diasFestivos?
                     this.state.diasFestivos.map( (dia, key) => (
                         <Card key={key} className="mb-3">
                             <Card.Body><FontAwesomeIcon icon={faCalendar} />{" "}<strong>{dia.dia_numero + " de " + monthNameByNumber(dia.mes_numero) + ". " + dia.descripcion}</strong></Card.Body>

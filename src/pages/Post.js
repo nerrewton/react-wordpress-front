@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Spinner } from "react-bootstrap";
 
 import { getPostByUrl } from "../services/wordpress/wordpressServices";
 import { dateToString } from "../tools/dateTools";
@@ -17,6 +17,7 @@ class Post extends Component {
             publishingDate: "",
             content: "",
             postUrl: "",
+            loading: false
         };
 
         this.abortController = new AbortController();
@@ -49,6 +50,7 @@ class Post extends Component {
                     this.setState({
                         ...this.state,
                         ...newState,
+                        loading: false
                     });
 
                     this.updateMetaData("SET_META_DATA", {
@@ -66,7 +68,10 @@ class Post extends Component {
     }
 
     componentDidMount() {
-        this.getPostContent();
+        this.setState({
+            ...this.state,
+            loading: true
+        }, () => this.getPostContent());
 
         window.addEventListener("scroll", () => {});
     }
@@ -97,6 +102,9 @@ class Post extends Component {
                                     </Col>
                                 </Row>
                             </section>
+                            { this.state.loading ?
+                            <Spinner animation="border" variant="warning" className="spinnerCustom"/>
+                            : null}
                             <section
                                 className="post-content"
                                 dangerouslySetInnerHTML={{

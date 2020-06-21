@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -142,7 +142,9 @@ class Home extends Component {
                             </Row>
                         </div>
                         <div className="custom-feed">
-                            {this.props.posts.map((post, index) => {
+                            { this.state.loading ?
+                            <Spinner animation="border" variant="warning" className="spinnerCustom"/>
+                            :this.props.posts.map((post, index) => {
                                 return (
                                     <Link
                                         to={"post/" + post.post_name}
