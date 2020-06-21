@@ -1,7 +1,6 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import NotFound from "./pages/NotFound";
-import Header from "./components/Header";
 import Post from "./pages/Post";
 import Page from "./pages/Page";
 import Tool from "./pages/Tool";
@@ -12,8 +11,7 @@ const App = () => {
     let menus = portalMenus;
 
     return (
-        <Router>
-            <Header menus={menus}/>
+        <BrowserRouter>
             <Switch>
                 {menus.map((menu, key) => {
                     const Componente = getComponent(menu.component);
@@ -36,7 +34,7 @@ const App = () => {
                     <NotFound />
                 </Route>
             </Switch>
-        </Router>
+        </BrowserRouter>
     );
 };
 

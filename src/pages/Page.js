@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 
+import Header from "../components/Header";
 import GoBack from "../components/GoBack";
 
 class Page extends Component {
@@ -14,6 +15,7 @@ class Page extends Component {
     render() {
         return (
             <>
+                <Header />
                 <div className="custom-container">
                     <div className="custom-content-page">
                         <article className="page">

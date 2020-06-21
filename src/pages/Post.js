@@ -4,6 +4,7 @@ import { Row, Col, Spinner } from "react-bootstrap";
 
 import { getPostByUrl } from "../services/wordpress/wordpressServices";
 import { dateToString } from "../tools/dateTools";
+import Header from "../components/Header";
 import MetaData from "../components/MetaData";
 import GoBack from "../components/GoBack";
 
@@ -84,6 +85,7 @@ class Post extends Component {
         return (
             <>
                 <MetaData />
+                <Header />
                 <div className="custom-container">
                     <div className="custom-content-post">
                         <article className="post">

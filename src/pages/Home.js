@@ -3,6 +3,7 @@ import { Row, Col, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
+import Header from "../components/Header";
 import LeftAside from "../components/LeftAside";
 import RightAside from "../components/RightAside";
 import Buscador from "../components/Buscador";
@@ -120,6 +121,7 @@ class Home extends Component {
         return (
             <>
                 <MetaData />
+                <Header />
                 <div className="custom-container">
                     <LeftAside />
                     <RightAside />

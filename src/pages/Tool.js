@@ -3,6 +3,7 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
 
+import Header from "../components/Header";
 import CardTool from "../components/CardTool";
 import LeftAside from "../components/LeftAside";
 import RightAside from "../components/RightAside";
@@ -78,6 +79,7 @@ class Tool extends Component {
         return (
             <>
                 <MetaData />
+                <Header />
                 <div className="custom-container">
                     <LeftAside />
                     <RightAside />

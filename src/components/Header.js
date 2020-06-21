@@ -7,9 +7,9 @@ import {
 import { Link } from "react-router-dom";
 import configuracion from '../config/configuration.json';
 import logoImg from "../assets/logo_fondo_negro.jpg";
+import menus from "../routes/routesDefinition.json";
 
 const Header = props => {
-    const { menus } = props;
     if (!menus) return null;
 
     return (
