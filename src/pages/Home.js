@@ -154,8 +154,9 @@ class Home extends Component {
                                     </Link>
                                 );
                             })}
-                            { this.state.loading ? <Spinner animation="border" variant="warning" className="spinnerCustom"/>: null }
                             <div id="no_post" className="custom-no-entries">
+                                { this.state.loading ? <Spinner animation="border" variant="warning" className="spinnerCustom"/>: null }
+                                <br/>
                                 No hay más resultados!
                             </div>
                         </div>
