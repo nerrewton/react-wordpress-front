@@ -144,9 +144,7 @@ class Home extends Component {
                             </Row>
                         </div>
                         <div className="custom-feed">
-                            { this.state.loading ?
-                            <Spinner animation="border" variant="warning" className="spinnerCustom"/>
-                            :this.props.posts.map((post, index) => {
+                            { this.props.posts.map((post, index) => {
                                 return (
                                     <Link
                                         to={"post/" + post.post_name}
@@ -156,6 +154,7 @@ class Home extends Component {
                                     </Link>
                                 );
                             })}
+                            { this.state.loading ? <Spinner animation="border" variant="warning" className="spinnerCustom"/>: null }
                             <div id="no_post" className="custom-no-entries">
                                 No hay más resultados!
                             </div>
