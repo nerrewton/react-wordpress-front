@@ -2,8 +2,15 @@ import React, { Component, Fragment } from 'react';
 import {
     Row,
     Col,
-    Form
+    Form,
+    Button
 } from "react-bootstrap";
+import {
+    FontAwesomeIcon
+} from '@fortawesome/react-fontawesome';
+import {
+    faBroom
+} from '@fortawesome/free-solid-svg-icons';
 
 class ContadorCaracteres extends Component {
     constructor(props){
@@ -17,6 +24,7 @@ class ContadorCaracteres extends Component {
         }
 
         this.handleFiledChanges = this.handleFiledChanges.bind(this);
+        this.handleClean = this.handleClean.bind(this);
     }
 
     handleFiledChanges( event ){
@@ -52,6 +60,14 @@ class ContadorCaracteres extends Component {
         });
     }
 
+    handleClean(){
+        this.setState({
+            ...this.state,
+            textToProcess: "",
+            textResult: ""
+        });
+    }
+
     render() { 
         return (
             <Fragment>
@@ -81,6 +97,9 @@ class ContadorCaracteres extends Component {
                             <Form.Group>
                                 <Form.Control as="textarea" rows="10" name="textToProcess" placeholder="Copie y pegue el texto aquí" value={this.state.textToProcess} onChange={this.handleFiledChanges}/>
                             </Form.Group>                     
+                            <Form.Group>
+                                <Button variant="info" onClick={()=>this.handleClean()}>Limpiar <FontAwesomeIcon icon={faBroom} /></Button>
+                            </Form.Group>
                         </Form>
                     </Col>
                 </Row>

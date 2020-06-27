@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import WebAds from "./WebAds";
+import Politica from "./Politica";
+import Help from "./Help";
 
 class LeftAside extends Component {
     render() { 
         return (
             <div className="custom-aside-left">
-                <WebAds />
+                <div className="politica-container">
+                    <Politica />
+                    <Help />
+                </div>
             </div>
         );
     }

@@ -3,5 +3,6 @@
     "api_url": "http://api.cockycode.com/",
     "api_wordpress_url": "http://api.cockycode.com/wordpress/",
     "portal_id": 3,
-    "adsJavaScript": ""
+    "adsJavaScript": "",
+    "whatsapp_link": "https://api.whatsapp.com/send?phone=573016510923"
 }

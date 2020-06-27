@@ -115,7 +115,7 @@ class Home extends Component {
         ) {
             this.handlePosts("HOME_POST_NEXT_PAGE");
         }
-    };
+    }
 
     render() {
         return (
@@ -156,7 +156,6 @@ class Home extends Component {
                             })}
                             <div id="no_post" className="custom-no-entries">
                                 { this.state.loading ? <Spinner animation="border" variant="warning" className="spinnerCustom"/>: null }
-                                <br/>
                                 No hay más resultados!
                             </div>
                         </div>

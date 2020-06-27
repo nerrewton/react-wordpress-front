@@ -61,14 +61,13 @@ class ExportarFestivos extends Component {
         );
 
         promiseDiasFestivos.then( response => {
-            if( this._isMounted && response && response.length > 0 ){
+            if( this._isMounted && response ){
                 this.setState({
                     ...this.state,
                     diasFestivos: response,
                     loading: false
                 });
-            }
-            
+            }            
         }).catch( error => console.warn(error) );
     }
 
@@ -96,9 +95,7 @@ class ExportarFestivos extends Component {
         const diasFestivos = this.state.diasFestivos;
         const fechaInicio = this.state.fechaInicio;
         const fechaFin = this.state.fechaFin;
-        const fiTime = fechaInicio.getTime();
-        const ffTime = fechaFin.getTime();
-        const diff = ffTime - fiTime;
+        const diff = fechaFin - fechaInicio;
         const diasEntreFechas = Math.ceil( diff / (1000 * 3600 * 24) );
         let data = [];
 
@@ -241,12 +238,14 @@ class ExportarFestivos extends Component {
                     : null}
                 </div>
                 <div className="toast-styles">
+                    {this.state.showToast?
                     <Toast onClose={() => this.setState({...this.state, showToast: false})} show={ this.state.showToast } delay={3000} autohide>
                         <Toast.Header>
                             <strong className="mr-auto">Mensaje</strong>
                         </Toast.Header>
                         <Toast.Body>{this.state.toastMessage}</Toast.Body>
                     </Toast>
+                    :null}
                 </div>
             </Fragment>
         );

@@ -28,6 +28,18 @@ export const getPostById = ( postId ) => {
     }).then( response => response.json() );
 }
 
+export const getPostByName = ( name ) => {
+    if( !name ) return {};
+
+    return fetch(configuration.api_wordpress_url + "posts/name/"+ name, {
+        method: "GET",
+        headers:{
+            'Content-Type': 'application/json'
+        },
+        credentials: 'same-origin'
+    }).then( response => response.json() );
+}
+
 export const getPostByUrl = ( url, signal ) => {
     if( !url ) return {};
 

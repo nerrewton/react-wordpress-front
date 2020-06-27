@@ -59,7 +59,8 @@ class Post extends Component {
                         description: response.post_content,
                         type: "article",
                         author: response.WpUsers.display_name,
-                        url: window.location.href
+                        url: window.location.href,
+                        keywords: response.post_title
                     });
                 }
             })
