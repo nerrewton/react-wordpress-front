@@ -1,11 +1,15 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import NotFound from "./pages/NotFound";
-import Post from "./pages/Post";
-import Page from "./pages/Page";
-import Tool from "./pages/Tool";
+import { Spinner } from "react-bootstrap";
 import { getComponent } from "./routes/routeComponentMap";
 import portalMenus from "./routes/routesDefinition.json";
+
+const Post = lazy(()=> import("./pages/Post"));
+const Page = lazy(()=> import("./pages/Page"));
+const Tool = lazy(()=> import("./pages/Tool"));
+
+const Loading = () => <Spinner animation="border" variant="warning" className="spinnerCustom"/>;
 
 const App = () => {
     let menus = portalMenus;
@@ -17,18 +21,26 @@ const App = () => {
                     const Componente = getComponent(menu.component);
                     return (
                         <Route exact path={menu.ruta} key={key}>
-                            <Componente />
+                            <Suspense fallback={Loading}>
+                                <Componente />
+                            </Suspense>
                         </Route>
                     );
                 })}
                 <Route exact path="/post/:post_url">
-                    <Post />
+                    <Suspense fallback={Loading}>
+                        <Post />
+                    </Suspense>
                 </Route>
                 <Route exact path="/tool/:tool_url?">
-                    <Tool />
+                    <Suspense fallback={Loading}>
+                        <Tool />
+                    </Suspense>
                 </Route>
                 <Route exact path="/page/:page_url">
-                    <Page />
+                    <Suspense fallback={Loading}>
+                        <Page />
+                    </Suspense>
                 </Route>
                 <Route path="*">
                     <NotFound />

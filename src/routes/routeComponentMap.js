@@ -1,11 +1,13 @@
-import Home from '../pages/Home';
-import Ventas from '../pages/Ventas';
-import Nosotros from '../pages/Nosotros';
-import Tool from "../pages/Tool";
-import NotFound from '../pages/NotFound';
+import { lazy } from "react";
+
+const Home = lazy(()=> import("../pages/Home"));
+const Ventas = lazy(()=> import("../pages/Ventas"));
+const Nosotros = lazy(()=> import("../pages/Nosotros"));
+const Tool = lazy(()=> import("../pages/Tool"));
+const NotFound = lazy(()=> import("../pages/NotFound"));
 
 const mapping = {
-    "Home": Home,
+    "Home":  Home,
     "Ventas": Ventas,
     "Nosotros": Nosotros,
     "Tool": Tool

@@ -1,15 +1,18 @@
-import React, { Component } from "react";
+import React, { Component, lazy, Suspense } from "react";
 import { Row, Col, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
-import Header from "../components/Header";
-import LeftAside from "../components/LeftAside";
-import RightAside from "../components/RightAside";
-import Buscador from "../components/Buscador";
-import EntradaFeed from "../components/EntradaFeed";
 import MetaData from "../components/MetaData";
 import { getPostPaginate } from "../services/wordpress/wordpressServices";
+
+const Header = lazy(() => import("../components/Header"));
+const LeftAside = lazy(() => import("../components/LeftAside"));
+const RightAside = lazy(() => import("../components/RightAside"));
+const Buscador = lazy(() => import("../components/Buscador"));
+const EntradaFeed = lazy(() => import("../components/EntradaFeed"));
+
+const Loading = () => <Spinner animation="border" variant="warning" className="spinnerCustom"/>;
 
 class Home extends Component {
     constructor(props) {
@@ -120,16 +123,26 @@ class Home extends Component {
     render() {
         return (
             <>
-                <MetaData />
-                <Header />
+                <Suspense fallback={Loading}>
+                    <MetaData />
+                </Suspense>
+                <Suspense fallback={Loading}>
+                    <Header />
+                </Suspense>                
                 <div className="custom-container">
-                    <LeftAside />
-                    <RightAside />
+                    <Suspense fallback={Loading}>
+                        <LeftAside />
+                    </Suspense>
+                    <Suspense fallback={Loading}>
+                        <RightAside />
+                    </Suspense>
                     <div className="custom-content">
                         <div className="custom-buscador">
                             <Row>
                                 <Col>
-                                    <Buscador />
+                                    <Suspense fallback={Loading}>
+                                        <Buscador />
+                                    </Suspense>
                                 </Col>
                             </Row>
                             <Row>
@@ -150,7 +163,9 @@ class Home extends Component {
                                         to={"post/" + post.post_name}
                                         key={index}
                                     >
-                                        <EntradaFeed data={post} />
+                                        <Suspense fallback={Loading}>
+                                            <EntradaFeed data={post} />
+                                        </Suspense>
                                     </Link>
                                 );
                             })}
