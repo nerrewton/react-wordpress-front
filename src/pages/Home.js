@@ -123,24 +123,24 @@ class Home extends Component {
     render() {
         return (
             <>
-                <Suspense fallback={Loading}>
+                <Suspense fallback={Loading()}>
                     <MetaData />
                 </Suspense>
-                <Suspense fallback={Loading}>
+                <Suspense fallback={Loading()}>
                     <Header />
                 </Suspense>                
                 <div className="custom-container">
-                    <Suspense fallback={Loading}>
+                    <Suspense fallback={Loading()}>
                         <LeftAside />
                     </Suspense>
-                    <Suspense fallback={Loading}>
+                    <Suspense fallback={Loading()}>
                         <RightAside />
                     </Suspense>
                     <div className="custom-content">
                         <div className="custom-buscador">
                             <Row>
                                 <Col>
-                                    <Suspense fallback={Loading}>
+                                    <Suspense fallback={Loading()}>
                                         <Buscador />
                                     </Suspense>
                                 </Col>
@@ -163,15 +163,14 @@ class Home extends Component {
                                         to={"post/" + post.post_name}
                                         key={index}
                                     >
-                                        <Suspense fallback={Loading}>
+                                        <Suspense fallback={Loading()}>
                                             <EntradaFeed data={post} />
                                         </Suspense>
                                     </Link>
                                 );
                             })}
                             <div id="no_post" className="custom-no-entries">
-                                { this.state.loading ? <Spinner animation="border" variant="warning" className="spinnerCustom"/>: null }
-                                No hay más resultados!
+                                { this.state.loading ? <Spinner animation="border" variant="warning" className="spinnerCustom"/>: "No hay más resultados!" }
                             </div>
                         </div>
                     </div>

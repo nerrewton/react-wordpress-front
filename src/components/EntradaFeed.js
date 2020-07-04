@@ -38,7 +38,7 @@ const EntradaFeed = ( params ) => {
 
     return (
         <Card className="custom-entrada-card">
-            <Card.Img variant="top" src={ meta && meta.guid ? meta.guid : ""} alt={ meta && meta.post_title ? meta.post_title : ""}/>
+            <Card.Img variant="top" className="custom-card-image" src={ meta && meta.guid ? meta.guid : ""} alt={ meta && meta.post_title ? meta.post_title : ""}/>
             <Card.Body>
                 <Card.Title>{data.post_title}</Card.Title>
                 <Card.Text>{ getDescripcion(data.post_content) }</Card.Text>

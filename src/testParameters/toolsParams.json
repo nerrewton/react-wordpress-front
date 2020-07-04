@@ -16,5 +16,14 @@
         "component": "ContadorCaracteres",
         "keywords": "contador caracteres online,contador caracteres,contador palabras",
         "active": true
+    },
+    {
+        "url": "/tool/pixel-to-rem-convertidor-online",
+        "image": "pixel_to_rem",
+        "title": "Pixel to rem convertidor",
+        "description": "Convertidor de pixeles a rem online",
+        "component": "PixelToRem",
+        "keywords": "convertidor pixel a rem,px to rem,rem to px, rem to pixel",
+        "active": true
     }
 ]

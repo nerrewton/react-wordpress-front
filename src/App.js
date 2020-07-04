@@ -21,24 +21,24 @@ const App = () => {
                     const Componente = getComponent(menu.component);
                     return (
                         <Route exact path={menu.ruta} key={key}>
-                            <Suspense fallback={Loading}>
+                            <Suspense fallback={Loading()}>
                                 <Componente />
                             </Suspense>
                         </Route>
                     );
                 })}
                 <Route exact path="/post/:post_url">
-                    <Suspense fallback={Loading}>
+                    <Suspense fallback={Loading()}>
                         <Post />
                     </Suspense>
                 </Route>
                 <Route exact path="/tool/:tool_url?">
-                    <Suspense fallback={Loading}>
+                    <Suspense fallback={Loading()}>
                         <Tool />
                     </Suspense>
                 </Route>
                 <Route exact path="/page/:page_url">
-                    <Suspense fallback={Loading}>
+                    <Suspense fallback={Loading()}>
                         <Page />
                     </Suspense>
                 </Route>
