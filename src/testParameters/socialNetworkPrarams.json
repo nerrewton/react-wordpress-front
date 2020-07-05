@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Facebook",
+        "url": "https://www.facebook.com/nerrechi",
+        "username": "nerrechi",
+        "icon": "facebook"
+    },
+    {
+        "name": "Twitter",
+        "url": "https://twitter.com/nerrechiboy",
+        "username": "nerrechiboy",
+        "icon": "twitter"
+    },
+    {
+        "name": "Instagram",
+        "url": "https://www.instagram.com/nerrechiboy",
+        "username": "nerrechiboy",
+        "icon": "instagram"
+    },
+    {
+        "name": "Github",
+        "url": "https://github.com/nerrewton",
+        "username": "nerrewton",
+        "icon": "github"
+    }
+]

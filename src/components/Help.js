@@ -24,8 +24,8 @@ const Help = (props) => {
                 </Modal.Header>
                 <Modal.Body>
                     <p className="pb-3">
-                        Si tuviste algún problema usando nuestro portal o tienes alguna pregunta, por favor
-                        usa los siguientes canales para comunicarte con nosotros:
+                        Si tuviste algún problema usando este portal o tienes alguna pregunta, por favor
+                        usa los siguientes canales para comunicarte:
                     </p>                    
                     <span className="help-item-whatsapp" onClick={()=>handleClickWhatsApp()}><strong>WhatsApp</strong>: +57 301 651 0923</span>
                     <span className="help-item-email"><strong>Email</strong>: nerrechiboy@gmail.com</span>

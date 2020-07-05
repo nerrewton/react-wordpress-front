@@ -1,6 +1,6 @@
-import festivosExcel from "../assets/exportar_días_festivos_excel.png";
-import contadorCaracteres from "../assets/contador_caracteres.png";
-import pixelToRem from "../assets/pixel_to_rem.png";
+import festivosExcel from "../assets/tools/exportar_días_festivos_excel.png";
+import contadorCaracteres from "../assets/tools/contador_caracteres.png";
+import pixelToRem from "../assets/tools/pixel_to_rem.png";
 
 export const getImage = ( image ) => {
     const arrayImages = {
