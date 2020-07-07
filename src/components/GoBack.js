@@ -1,16 +1,14 @@
 import React from 'react';
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
 
-const GoBack = ( props ) => {
-    const goBack = ( ) => {
-        props.history.goBack();
-    }
-
+const GoBack = ( props ) => {   
     return (
-        <Button variant="dark" size="lg" onClick={goBack}>
-            Volver
-        </Button>
+        <Link to="/">
+            <Button variant="dark" size="lg">
+                Volver
+            </Button>
+        </Link>
     );
 } 
 
