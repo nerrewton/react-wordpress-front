@@ -27,6 +27,7 @@ const EntradaFeed = ( params ) => {
             //Obtiene el meta relacionado con la imagen destacada
             data.WpPostMeta.forEach( metaItem => {
                 if( metaItem.meta_key === "_thumbnail_id" || metaItem.meta_key==="_edit_lock"){
+                    if( metaItem.meta_value.indexOf(":") !== -1 ) return;
                     metaId = parseInt( metaItem.meta_value );
                 }
             });
