@@ -17,7 +17,7 @@ class Home extends Component {
         super(props);
 
         this._isMounted = false;
-        this.abortController = new AbortController();
+        //this.abortController = new AbortController();
 
         this.state = {
             loading: false,
@@ -58,14 +58,14 @@ class Home extends Component {
 
     componentWillUnmount() {
         this._isMounted = false;
-        this.abortController.abort();
+        //this.abortController.abort();
     }
 
     getPosts = (type) => {
         const promisePost = getPostPaginate(
             this.props.page,
             this.props.length,
-            this.abortController.signal
+            //this.abortController.signal
         );
 
         promisePost

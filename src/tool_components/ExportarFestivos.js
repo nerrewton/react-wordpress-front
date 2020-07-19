@@ -32,7 +32,7 @@ class ExportarFestivos extends Component {
         super(props);
         
         this._isMounted = false;
-        this.abortController = new AbortController();
+        //this.abortController = new AbortController();
 
         this.state = {
             loading: false,
@@ -57,7 +57,7 @@ class ExportarFestivos extends Component {
             null,
             this.state.descripcion,
             this.state.paisCodigo,
-            this.abortController.signal
+            //this.abortController.signal
         );
 
         promiseDiasFestivos.then( response => {
@@ -154,7 +154,7 @@ class ExportarFestivos extends Component {
 
     componentWillUnmount() {
         this._isMounted = false;
-        this.abortController.abort();
+        //this.abortController.abort();
     }
 
     render() { 

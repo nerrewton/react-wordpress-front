@@ -21,7 +21,7 @@ class Post extends Component {
             loading: false
         };
 
-        this.abortController = new AbortController();
+        //this.abortController = new AbortController();
     }
 
     updateMetaData(type = "", metadata = {}) {
@@ -32,7 +32,7 @@ class Post extends Component {
         const url = window.location.pathname;
         const postContentRequest = getPostByUrl(
             url.substr(6),
-            this.abortController.signal
+            //this.abortController.signal
         );
 
         postContentRequest
@@ -79,7 +79,7 @@ class Post extends Component {
     }
 
     componentWillUnmount() {
-        this.abortController.abort();
+        //this.abortController.abort();
     }
 
     render() {

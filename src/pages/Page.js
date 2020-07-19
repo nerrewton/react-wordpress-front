@@ -16,14 +16,14 @@ class Page extends Component {
             loading: false
         };
 
-        this.abortController = new AbortController();
+        //this.abortController = new AbortController();
     }
 
     getPageContent(){
         const url = window.location.pathname;
         const pageContentRequest = getPostByName(
             url.substr(6),
-            this.abortController.signal
+            //this.abortController.signal
         );
 
         pageContentRequest
@@ -61,7 +61,7 @@ class Page extends Component {
     }
 
     componentWillUnmount() {
-        this.abortController.abort();
+        //this.abortController.abort();
     }
 
     render() {
