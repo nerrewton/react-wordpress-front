@@ -1,8 +1,8 @@
-import React, { Component, lazy, Suspense } from 'react';
+import React, { Component } from 'react';
 
-const Politica = lazy( () => import("./Politica") );
-const Help = lazy( () => import("./Help") );
-const SocialNetworks = lazy( () => import("./SocialNetworks") );
+import Politica from "./Politica";
+import Help from "./Help";
+import SocialNetworks from "./SocialNetworks";
 
 class LeftAside extends Component {
     render() { 
@@ -12,10 +12,8 @@ class LeftAside extends Component {
                     <SocialNetworks />
                 </div>
                 <div className="politica-container">
-                    <Suspense>
-                        <Politica />
-                        <Help />
-                    </Suspense>
+                    <Politica />
+                    <Help />
                 </div>
             </div>
         );

@@ -1,10 +1,8 @@
-import React, { Component, lazy, Suspense } from 'react';
-import { Spinner } from "react-bootstrap";
+import React, { Component } from 'react';
 import { getImage } from "../tools/imagesTools";
 import arrayTools from "../testParameters/toolsParams.json";
 
-const CardTool = lazy(() => import("../components/CardTool"));
-const Loading = () => <Spinner animation="border" variant="warning" className="spinnerCustom"/>;
+import CardTool from "../components/CardTool";
 
 class RightAside extends Component {
     render() { 
@@ -14,9 +12,7 @@ class RightAside extends Component {
                     arrayTools.map( (tool, key) => {
                         return (
                             tool.active ?
-                            <Suspense fallback={Loading()} key={key}>
-                                <CardTool key={key} url={tool.url} title={tool.title} image={getImage( tool.image )} />
-                            </Suspense>
+                            <CardTool key={key} url={tool.url} title={tool.title} image={getImage( tool.image )} />
                             :null
                         )
                     })

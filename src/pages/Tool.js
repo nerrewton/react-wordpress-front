@@ -1,20 +1,18 @@
-import React, { Component, lazy, Suspense } from "react";
+import React, { Component } from "react";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { withRouter } from 'react-router-dom';
-import { Spinner } from "react-bootstrap";
 import { getImage } from "../tools/imagesTools";
 import MetaData from "../components/MetaData"; 
 import configTools from "../testParameters/toolsParams.json";
 
-const Header = lazy(()=> import("../components/Header"));
-const CardTool = lazy(()=> import("../components/CardTool"));
-const LeftAside = lazy(()=> import("../components/LeftAside"));
-const RightAside = lazy(()=> import("../components/RightAside"));
-const ExportarFestivos = lazy( () => import("../tool_components/ExportarFestivos"));
-const ContadorCaracteres = lazy( () => import("../tool_components/ContadorCaracteres"));
-const PixelToRem = lazy( () => import("../tool_components/PixelToRem"));
-const Loading = () => <Spinner animation="border" variant="warning" className="spinnerCustom"/>;
+import Header from "../components/Header";
+import CardTool from "../components/CardTool";
+import LeftAside from "../components/LeftAside";
+import RightAside from "../components/RightAside";
+import ExportarFestivos from "../tool_components/ExportarFestivos";
+import ContadorCaracteres from "../tool_components/ContadorCaracteres";
+import PixelToRem from "../tool_components/PixelToRem";
 
 const components = {
     "ExportarFestivos": ExportarFestivos,
@@ -83,24 +81,18 @@ class Tool extends Component {
         return (
             <>
                 <MetaData />
-                <Suspense fallback={Loading()}>
-                    <Header />
-                </Suspense>
+                <Header />
                 <div className="custom-container">
-                    <Suspense fallback={Loading()}>
-                        <LeftAside />
-                    </Suspense>
-                    <Suspense fallback={Loading()}>
-                        <RightAside />
-                    </Suspense>
+                    <LeftAside />
+                    <RightAside />
                     <div className="custom-content p-3">
                         <section className="tool-header">
                             <h1 className="text-center text-title">{this.state.title}</h1>
                         </section>
                         <section className="tool-content mt-5">
-                            {CurrentTool?<Suspense fallback={Loading()}><CurrentTool/></Suspense>
+                            {CurrentTool?<CurrentTool/>
                             :configTools.map( (tool, key) => {
-                                return tool.active ?<Suspense fallback={Loading()} key={key}><CardTool key={key} url={tool.url} title={tool.title} image={getImage( tool.image )} /></Suspense>:null
+                                return tool.active ?<CardTool key={key} url={tool.url} title={tool.title} image={getImage( tool.image )} />:null
                             })}
                         </section>
                     </div>

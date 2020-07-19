@@ -1,19 +1,15 @@
-import React, { Component, Fragment, lazy, Suspense } from 'react';
-import { Spinner } from "react-bootstrap";
+import React, { Component, Fragment } from 'react';
 import socialNetworksParams from "../testParameters/socialNetworkPrarams.json";
 
-const SocialNetrowkItem = lazy( () => import("./SocialNetrowkItem") );
-const Loading = () => <Spinner animation="border" variant="warning" className="spinnerCustom"/>;
+import SocialNetrowkItem from "./SocialNetrowkItem";
 
 class SocialNetworks extends Component {
     render() { 
         return (
             <Fragment>
                 { socialNetworksParams && socialNetworksParams.length !== 0?
-                socialNetworksParams.map(( element, key ) => (
-                    <Suspense key={key} fallback={Loading()}>
-                        <SocialNetrowkItem key={key} settings={element} />
-                    </Suspense>
+                socialNetworksParams.map(( element, key ) => (                    
+                    <SocialNetrowkItem key={key} settings={element} />
                 ))
                 : null}
             </Fragment>

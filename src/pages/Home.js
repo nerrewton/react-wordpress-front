@@ -1,4 +1,4 @@
-import React, { Component, lazy, Suspense } from "react";
+import React, { Component } from "react";
 import { Row, Col, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -6,13 +6,11 @@ import { connect } from "react-redux";
 import MetaData from "../components/MetaData";
 import { getPostPaginate } from "../services/wordpress/wordpressServices";
 
-const Header = lazy(() => import("../components/Header"));
-const LeftAside = lazy(() => import("../components/LeftAside"));
-const RightAside = lazy(() => import("../components/RightAside"));
-const Buscador = lazy(() => import("../components/Buscador"));
-const EntradaFeed = lazy(() => import("../components/EntradaFeed"));
-
-const Loading = () => <Spinner animation="border" variant="warning" className="spinnerCustom"/>;
+import Header from "../components/Header";
+import LeftAside from "../components/LeftAside";
+import RightAside from "../components/RightAside";
+import Buscador from "../components/Buscador";
+import EntradaFeed from "../components/EntradaFeed";
 
 class Home extends Component {
     constructor(props) {
@@ -123,26 +121,16 @@ class Home extends Component {
     render() {
         return (
             <>
-                <Suspense fallback={Loading()}>
-                    <MetaData />
-                </Suspense>
-                <Suspense fallback={Loading()}>
-                    <Header />
-                </Suspense>                
+                <MetaData />
+                <Header />
                 <div className="custom-container">
-                    <Suspense fallback={Loading()}>
-                        <LeftAside />
-                    </Suspense>
-                    <Suspense fallback={Loading()}>
-                        <RightAside />
-                    </Suspense>
+                    <LeftAside />                    
+                    <RightAside />
                     <div className="custom-content">
                         <div className="custom-buscador">
                             <Row>
                                 <Col>
-                                    <Suspense fallback={Loading()}>
-                                        <Buscador />
-                                    </Suspense>
+                                    <Buscador />
                                 </Col>
                             </Row>
                             <Row>
@@ -163,9 +151,7 @@ class Home extends Component {
                                         to={"post/" + post.post_name}
                                         key={index}
                                     >
-                                        <Suspense fallback={Loading()}>
-                                            <EntradaFeed data={post} />
-                                        </Suspense>
+                                        <EntradaFeed data={post} />
                                     </Link>
                                 );
                             })}
